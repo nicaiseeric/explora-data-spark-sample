@@ -1,2 +1,3 @@
 # explora-data-spark-sample
-Spark sample program
+This project provides a sample of Java Spark Application
+
