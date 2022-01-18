@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +34,7 @@ public class SparkAppTest {
     public void setup() throws IOException {
         Configuration hadoopConf = new Configuration();
         String localInputFileStr = "src/test/resources/data/input/bigdatadefinition.txt";
-        FileSystem fs = FileSystem.getLocal(hadoopConf);
+//        FileSystem fs = FileSystem.getLocal(hadoopConf);
         hdfs = FileSystem.get(hadoopConf);
         Path inputFilePath = new Path(inputFilePathStr);
         Path inputFolderPath =  inputFilePath.getParent();
