@@ -21,7 +21,7 @@ public class KafkaReceiver implements Supplier<JavaDStream<String>>  {
     private List<String> topics;
     private final Map<String,Object> kafkaparam = new HashMap<String,Object>()
     {{
-       put("bootstrap.servers","localhost:9092");
+       put("bootstrap.servers","localhost:20111");
        put("key.deserializer", StringDeserializer.class);
        put("value.deserializer",StringDeserializer.class);
        put("group.id","spark-kafta-integ");

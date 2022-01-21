@@ -12,7 +12,7 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.apache.spark" level="INFO" additivity="false">
+    <logger name="org.apache.spark" level="ERROR" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

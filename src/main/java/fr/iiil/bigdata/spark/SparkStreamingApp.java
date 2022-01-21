@@ -8,11 +8,13 @@ import fr.iiil.bigdata.spark.functions.WordCountFilterFunction;
 import fr.iiil.bigdata.spark.receiver.KafkaReceiver;
 import fr.iiil.bigdata.spark.writer.HBaseWriter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.VoidFunction2;
 import org.apache.spark.sql.*;
+import org.apache.spark.sql.types.*;
 import org.apache.spark.streaming.Duration;
 import org.apache.spark.streaming.Time;
 import org.apache.spark.streaming.api.java.JavaDStream;
@@ -70,7 +72,14 @@ public class SparkStreamingApp {
                             log.info("no data received in this microbatch...");
                         }
                         else {
-                            Dataset<Row> inputDS = sparkSession.createDataFrame(stringJavaRDD, Row.class);
+                            Dataset<Row> inputDS = sparkSession.createDataFrame(
+                                    stringJavaRDD.map(s -> RowFactory.create(NumberUtils.isCreatable(s) ? Integer.parseInt(s) : -1)),
+                                    new StructType(
+                                            new StructField[]{
+                                                    new StructField("value", DataTypes.IntegerType, true, new MetadataBuilder().build())
+                                            }
+                                    )
+                            );
                             new DatasetPrinter<Row>("inputDS" + time.toString()).accept(inputDS);
 
                             Column dateCol = functions.when(
@@ -132,7 +141,8 @@ public class SparkStreamingApp {
 //
                             Dataset<Row> outputDS = resultDS
                                     .withColumn("time", functions.lit(time.milliseconds()))
-                                    .cache();
+//                                    .cache()
+                                    ;
 
                             outputDS
                                     .write()
@@ -140,9 +150,9 @@ public class SparkStreamingApp {
                                     .partitionBy("date", "time")
                                     .parquet(outputPathStr);
 
-                            new HBaseWriter().accept(outputDS);
+//                            new HBaseWriter().accept(outputDS);
 
-                            outputDS.unpersist();
+//                            outputDS.unpersist();
                         }
                         log.info("end microbatch at {}", System.currentTimeMillis());
 
