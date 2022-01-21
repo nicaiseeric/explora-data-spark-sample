@@ -83,6 +83,19 @@
             <scope>${org.apache.spark.scope}</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_${scala.dep.version}</artifactId>
+            <version>${spark.version}</version>
+            <scope>${org.apache.spark.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-10_${scala.dep.version}</artifactId>
+            <version>${spark.version}</version>
+            <scope>${org.apache.spark.scope}</scope>
+        </dependency>
+
 
         <!-- Hadoop -->
         <dependency>
@@ -178,6 +191,8 @@
             <version>3.4.1</version>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 
     <build>
