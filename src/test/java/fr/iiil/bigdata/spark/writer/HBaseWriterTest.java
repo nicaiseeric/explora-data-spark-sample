@@ -1,6 +1,7 @@
 package fr.iiil.bigdata.spark.writer;
 
 import fr.iiil.bigdata.spark.beans.Book;
+import fr.iiil.bigdata.spark.reader.HBaseReader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;
